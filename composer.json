@@ -1,0 +1,12 @@
+{
+    "require": {
+        "php": ">=8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Core\\": "App/Core/",
+            "App\\": "App/",
+            "App\\Database\\": "App/Database/"
+        }
+    }
+}

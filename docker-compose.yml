@@ -1,0 +1,39 @@
+
+version: '3.9'
+
+services:
+  # NGINX
+  web:
+    image: nginx:latest
+    volumes:
+      - ./public:/public
+      - ./docker/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+    ports: 
+      - "80:80"
+
+  # PHP
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    volumes:
+      - ./public:/public
+      - ./App:/App
+      - ./vendor:/vendor
+
+  # MYSQL
+  db:
+    image: mysql:latest
+    volumes:
+      - mysqldata:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345bf
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+# REDIS
+volumes:
+  mysqldata:
